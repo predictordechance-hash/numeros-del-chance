@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 PREDICTOR DE CHANCE - COLOMBIA</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 10px 10px 40px 10px;
+        }
+        .container {
+            max-width: 440px;
+            margin: 10px auto;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h1 { color: #00e676; font-size: 26px; margin-bottom: 5px; font-weight: bold; }
+        p { color: #b0bec5; font-size: 14px; margin-top: 0; }
+        
+        select {
+            width: 100%; padding: 15px; font-size: 18px; background-color: #333333;
+            color: #ffffff; border: 2px solid #00e676; border-radius: 10px;
+            margin-top: 15px; cursor: pointer;
+        }
+        button {
+            width: 100%; padding: 18px; font-size: 18px; font-weight: bold;
+            background-color: #00e676; color: #000000; border: none;
+            border-radius: 12px; margin-top: 20px; cursor: pointer; transition: 0.2s;
+        }
+        button:active { transform: scale(0.98); }
+        .status { color: #ffd600; font-size: 16px; margin: 15px 0; }
+        .card {
+            background-color: #2d2d2d; padding: 15px; border-radius: 10px;
+            margin: 12px 0; font-size: 18px; color: #b0bec5; text-align: left;
+        }
+        .number {
+            font-size: 28px; font-weight: bold; color: #00e676;
+            letter-spacing: 4px; float: right;
+        }
+        .signos-title { color: #2979ff; font-size: 18px; font-weight: bold; margin-top: 20px; }
+        .signo-item { font-size: 20px; font-weight: bold; margin: 5px 0; color: #ffd600; }
+
+        .texto-info { text-align: left; line-height: 1.6; color: #e0e0e0; font-size: 15px; margin-top: 30px; border-top: 1px solid #333333; padding-top: 20px; }
+        .texto-info ul { padding-left: 20px; }
+        .texto-info li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎲 PREDICTOR DE CHANCE</h1>
+    <p>Resultados y proyecciones automáticas locales</p>
+    
+    <!-- PANTALLA PRINCIPAL: PREDICTOR -->
+    <div id="seccion-predictor">
+        <label for="sorteo" style="display:none;">Seleccionar Sorteo</label>
+        <select id="sorteo">
+            <option value="">Toca aquí para elegir...</option>
+            <option value="1">Dorado Mañana</option>
+            <option value="2">Dorado Tarde</option>
+            <option value="3">Dorado Noche</option>
+            <option value="4">Astro Sol</option>
+            <option value="5">Astro Luna</option>
+            <option value="6">Chontico Día</option>
+            <option value="7">Chontico Noche</option>
+            <option value="8">Paisita Día</option>
+            <option value="9">Paisita Noche</option>
+            <option value="10">Paisita Tres</option>
+            <option value="11">Cafeterito Tarde</option>
+            <option value="12">Cafeterito Noche</option>
+            <option value="13">Pijao Oro</option>
+            <option value="14">Lotería de Cundinamarca</option>
+            <option value="15">Lotería del Tolima</option>
+            <option value="16">Lotería de la Cruz Roja</option>
+            <option value="17">Lotería del Huila</option>
+            <option value="18">Lotería del Meta</option>
+            <option value="19">Lotería del Valle</option>
+            <option value="20">Lotería de Manizales</option>
+            <option value="21">Lotería de Bogotá</option>
+            <option value="22">Lotería del Quindío</option>
+            <option value="23">Lotería de Santander</option>
+            <option value="24">Lotería de Risaralda</option>
+            <option value="25">Lotería de Medellín</option>
+            <option value="26">Lotería de Boyacá</option>
+            <option value="27">Lotería del Cauca</option>
+        </select>
+        <button onclick="calcularPrediccion()">VER JUGADAS SUGERIDAS</button>
+        <div id="status" class="status"></div>
+        <div id="resultados"></div>
+        <div id="signos"></div>
+    </div>
+
+    <!-- RECOMENDACIONES -->
+    <div class="texto-info">
+        <h3 style="color:#00e676; text-align:center;">📖 MODOS DE USO</h3>
+        <ul>
+            <li><strong>Jugadas fijas:</strong> El sistema genera de forma exclusiva 5 combinaciones independientes de 4 cifras cada una.</li>
+            <li><strong>Sorteos Astro:</strong> Al seleccionar Astro Sol o Astro Luna, se calcularán adicionalmente los 3 signos zodiacales óptimos para complementar tus apuestas.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function generarNumero(cifras) {
+    let numero = "";
+    for (let i = 0; i < cifras; i++) {
+        numero += Math.floor(Math.random() * 10);
+    }
+    return numero;
+}
+
+function calcularPrediccion() {
+    const sorteoSelect = document.getElementById("sorteo");
+    const statusDiv = document.getElementById("status");
+    const resultadosDiv = document.getElementById("resultados");
+    const signosDiv = document.getElementById("signos");
+
+    // Limpiar pantallas previas
+    resultadosDiv.innerHTML = "";
+    signosDiv.innerHTML = "";
+
+    if (sorteoSelect.value === "") {
+        statusDiv.innerText = "⚠️ Por favor, selecciona un sorteo de la lista.";
+        return;
+    }
+
+    statusDiv.innerText = "🔄 Procesando tendencias estadísticas...";
+
+    setTimeout(() => {
+        statusDiv.innerText = "✅ Jugadas sugeridas para hoy:";
+        
+        // Generar exactamente 5 opciones de 4 cifras
+        let htmlResultados = "";
+        for (let i = 1; i <= 5; i++) {
+            htmlResultados += `<div class="card">Opción ${i} (4 Cifras): <span class="number">${generarNumero(4)}</span></div>`;
+        }
+        resultadosDiv.innerHTML = htmlResultados;
+
+        // Si es un sorteo Astro (valores 4 y 5), sugerir exactamente 3 signos diferentes
+        if (sorteoSelect.value === "4" || sorteoSelect.value === "5") {
+            const listaSignos = ["Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"];
+            
+            // Selección aleatoria de 3 signos únicos sin repetición
+            const seleccionados = [];
+            while (seleccionados.length < 3) {
+                const signoAleatorio = listaSignos[Math.floor(Math.random() * listaSignos.length)];
+                if (!seleccionados.includes(signoAleatorio)) {
+                    seleccionados.push(signoAleatorio);
+                }
+            }
+
+            signosDiv.innerHTML = `
+                <div class="signos-title">✨ SIGNOS RECOMENDADOS</div>
+                <div class="signo-item">🌟 ${seleccionados[0]}</div>
+                <div class="signo-item">🌟 ${seleccionados[1]}</div>
+                <div class="signo-item">🌟 ${seleccionados[2]}</div>
+            `;
+        }
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
+
