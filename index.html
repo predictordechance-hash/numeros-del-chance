@@ -49,6 +49,38 @@
         .texto-info { text-align: left; line-height: 1.6; color: #e0e0e0; font-size: 15px; margin-top: 30px; border-top: 1px solid #333333; padding-top: 20px; }
         .texto-info ul { padding-left: 20px; }
         .texto-info li { margin-bottom: 10px; }
+        
+        /* Sección de Donación */
+        .mencion-donacion {
+            background-color: rgba(41, 121, 255, 0.1);
+            border: 1px solid rgba(41, 121, 255, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .mencion-donacion strong {
+            color: #ffd600;
+        }
+        .btn-copiar {
+            display: inline-block;
+            width: auto;
+            padding: 8px 15px;
+            font-size: 13px;
+            background-color: #2979ff;
+            color: #ffffff;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .msg-agradecimiento {
+            font-style: italic;
+            color: #00e676;
+            font-size: 13px;
+            margin-top: 12px;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +135,16 @@
             <li><strong>Jugadas fijas:</strong> El sistema genera de forma exclusiva 5 combinaciones independientes de 4 cifras cada una.</li>
             <li><strong>Sorteos Astro:</strong> Al seleccionar Astro Sol o Astro Luna, se calcularán adicionalmente los 3 signos zodiacales óptimos para complementar tus apuestas.</li>
         </ul>
+        
+        <!-- SECCIÓN DE APOYO INTERACTIVA -->
+        <div class="mencion-donacion">
+            💜 Si valoras mi trabajo, recibo tu donación al <br>
+            <strong>NEQUI: 3192777958</strong><br>
+            <button class="btn-copiar" id="btnCopiar" onclick="copiarNequi()">📋 Copiar Número</button>
+            <div class="msg-agradecimiento">
+                "Gracias por tu ayuda amante del Chance, Dios te bendiga, mucha suerte !!!"
+            </div>
+        </div>
     </div>
 </div>
 
@@ -113,6 +155,25 @@ function generarNumero(cifras) {
         numero += Math.floor(Math.random() * 10);
     }
     return numero;
+}
+
+function copiarNequi() {
+    const numeroNequi = "3192777958";
+    navigator.clipboard.writeText(numeroNequi).then(() => {
+        const btn = document.getElementById("btnCopiar");
+        btn.innerText = "✅ ¡Copiado con éxito!";
+        btn.style.backgroundColor = "#00e676";
+        btn.style.color = "#000000";
+        
+        // Regresar el botón a su estado normal después de 2.5 segundos
+        setTimeout(() => {
+            btn.innerText = "📋 Copiar Número";
+            btn.style.backgroundColor = "#2979ff";
+            btn.style.color = "#ffffff";
+        }, 2500);
+    }).catch(err => {
+        console.error('Error al copiar el número: ', err);
+    });
 }
 
 function calcularPrediccion() {
@@ -168,4 +229,3 @@ function calcularPrediccion() {
 
 </body>
 </html>
-
